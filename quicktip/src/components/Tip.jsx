@@ -2,11 +2,33 @@ import React from "react"
 import "./Tip.css"
 
 const Tip = () => {
+    const formatMoney = (value) => {
+        value = Math.ceil(value * 100) / 100
+        value = value.toFixed(2)
+        return "£" + value
+    }
+
+    const formatSplit = (value) => {
+        if (value === 1) return value + " Person"
+        return value + " People"
+    }
     const update = () => {
-        let bill = document.getElementById("yourBill").value
+        let bill = Number(document.getElementById("yourBill").value)
         let tipPercent = document.getElementById("tipInput").value
         let split = document.getElementById("splitInput").value
-        console.log({ bill, tipPercent, split })
+
+        let tipValue = bill * (tipPercent / 100)
+        let tipEach = tipValue / split
+        let newBillEach = (bill + tipValue) / split
+
+        document.getElementById("tipPercent").innerHTML = tipPercent + "%"
+        document.getElementById("tipValue").innerHTML = formatMoney(tipValue)
+        document.getElementById("totalWithTip").innerHTML = formatMoney(
+            bill + tipValue
+        )
+        document.getElementById("splitValue").innerHTML = formatSplit(split)
+        document.getElementById("billEach").innerHTML = formatMoney(newBillEach)
+        document.getElementById("tipEach").innerHTML = formatMoney(tipEach)
     }
 
     return (
@@ -26,11 +48,11 @@ const Tip = () => {
                     <div>
                         <div className="space-between">
                             <label for="">Select Tip</label>
-                            <span id="tipPercent">0%</span>
+                            <span id="tipPercent"></span>
                         </div>
                         <input
                             type="range"
-                            defaultvalue="0"
+                            defaultvalue="10"
                             id="tipInput"
                             className="range"
                         ></input>
@@ -55,7 +77,7 @@ const Tip = () => {
                             type="range"
                             min="1"
                             max="10"
-                            defaultvalue="0"
+                            defaultvalue="1"
                             id="splitInput"
                             className="range"
                         ></input>
