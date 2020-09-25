@@ -1,3 +1,3 @@
-# quicktip
+# Simple Tip Calculator
 
-React project 1
+Tip calculator using JavaScript.
